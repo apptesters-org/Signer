@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  askuasign:
+    container_name: askuasign
+    build:
+      context: .
+      args:
+        DOMAIN: https://askuasign.example.com  # remember to actually fill this out lol !!
+    restart: unless-stopped
+    volumes:
+      - ./files:/root/AskuaSign/files
+      - ./views:/root/AskuaSign/views
+      - ./assets:/root/AskuaSign/assets
+      #- ./.env:/root/AskuaSign/.env
+      - ./main.js:/root/AskuaSign/main.js
+      - ./utils.js:/root/AskuaSign/utils.js
+    ports:
+      - 3000:3000/tcp
+    networks:
+      - askuasign
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: askuasign-db
+    hostname: mongo
+    image: mongo:7.0.2-jammy
+    restart: unless-stopped
+    volumes:
+      - ./db:/data/db
+    networks:
+      - askuasign
+
+networks:
+  askuasign:
+    external: false

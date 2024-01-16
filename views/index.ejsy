@@ -1,0 +1,394 @@
+<html lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <title>AppTesters IPA Signer</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="AppTesters IPA Signer" />
+    <meta name="keywords" content="AppTesters IPA Signer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="AppTesters IPA Signer" />
+    <meta property="og:site_name" content="AppTesters IPA Signer" />
+    <link
+      rel="shortcut icon"
+      href="https://sign.apptesters.org/assets/apptesters-iconx1024.png"
+    />
+    <link
+      href="https://sign.askua.ovh/assets/plugins/global/plugins.dark.bundle.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://sign.askua.ovh/assets/css/style.dark.bundle.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+  </head>
+  <body id="kt_body" class="dark-mode auth-bg">
+    <div class="d-flex flex-column flex-root" style="background-color:#161616">
+      <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+        <div class="d-flex flex-column flex-lg-row-fluid py-10">
+          <div class="d-flex flex-center flex-column flex-column-fluid">
+            <div class="w-lg-725px p-5 p-lg-5 mx-auto">
+              <div class="card" style="background-color:#292a29!important;">
+                <div class="card-body">
+                  <form
+                    id="meowsign"
+                    class="form fv-plugins-bootstrap5 fv-plugins-framework"
+                    action="#"
+                  >
+                    <div class="fv-row mb-7 fv-plugins-icon-container">
+                      <label class="fs-6 fw-semibold form-label mt-3">
+                        <span class="required">IPA</span>
+                      </label>
+                      <div class="input-group" id="ipagroup">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="ipa"
+                          aria-describedby="inputGroupFileAddon04"
+                          aria-label="Upload"
+                          accept=".ipa,application/octet-stream"
+                        />
+                        <button type="button" id="urlswap" class="btn btn-secondary">
+                          <span class="indicator-label" id="typetext"> Switch to URL </span>
+                      </button>
+                      </div>
+                    </div>
+
+                    <div class="fv-row mb-7">
+                      <label class="fs-6 fw-semibold form-label mt-3">
+                        <span class="required">MobileProvision</span>
+                      </label>
+                      <div class="input-group">
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="prov"
+                          aria-describedby="inputGroupFileAddon04"
+                          aria-label="Upload"
+                          accept=".mobileprovision"
+                        />
+                      </div>
+                      <% if(token) { %>
+                      <label class="fs-6 fw-semibold form-label mt-3"
+                        >Stored</label
+                      >
+                      <% } %>
+                    </div>
+
+                    <div
+                      class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2"
+                    >
+                      <div class="col">
+                        <div class="fv-row mb-7 fv-plugins-icon-container">
+                          <label class="fs-6 fw-semibold form-label mt-3">
+                            <span class="required">P12</span>
+                          </label>
+                          <div class="input-group">
+                            <input
+                              type="file"
+                              class="form-control"
+                              id="p12"
+                              aria-describedby="inputGroupFileAddon04"
+                              aria-label="Upload"
+                              accept=".p12"
+                            />
+                          </div>
+                          <% if(token) { %>
+                          <label class="fs-6 fw-semibold form-label mt-3">Stored</label>
+                          <% } %>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="fv-row mb-7">
+                          <label class="fs-6 fw-semibold form-label mt-3">
+                            <span>Password</span>
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control form-control-solid"
+                            name="password"
+                            id="password"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="row row-cols-1 row-cols-sm-2 rol-cols-md-1 row-cols-lg-2"
+                    >
+                      <div class="col">
+                        <div class="fv-row mb-7">
+                          <label class="fs-6 fw-semibold form-label mt-3">
+                            <span>AppName</span>
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control form-control-solid"
+                            name="bundlename"
+                            placeholder="Example App (optional)"
+                            id="bname"
+                          />
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="fv-row mb-7">
+                          <label class="fs-6 fw-semibold form-label mt-3">
+                            <span>BundleID</span>
+                          </label>
+                          <input
+                            type="text"
+                            class="form-control form-control-solid"
+                            name="bid"
+                            placeholder="com.example.app (optional)"
+                            id="bid"
+                          />
+                        </div>
+                      </div>
+                      <div class="col" style="display:none;">
+                        <div class="fv-row mb-7">
+                          <div
+                            class="form-check form-switch form-check-custom form-check-solid"
+                          >
+                            <input class="form-check-input" type="checkbox"
+                            id="store" <%= token ? 'checked' : '' %>>
+                            <label
+                              class="form-check-label fw-semibold form-label mt-3"
+                              for="store"
+                            >
+                              Store Certificate
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="separator mb-6"></div>
+                    <div class="text-center" id="waittext">
+                      <button
+                        type="button"
+                        id="uploadipa"
+                        class="btn btn-primary"
+                      >
+                        <span class="indicator-label"> Upload and Sign </span>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="dropzone-progress" id="nyaster">
+                      <div
+                        class="progress bg-gray-300"
+                        id="border"
+                        style="opacity: 0"
+                      >
+                        <div
+                          class="progress-bar bg-primary"
+                          role="progressbar"
+                          id="progressBar"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                          aria-valuenow="0"
+                          data-dz-uploadprogress=""
+                          style="opacity: 0; width: 0%"
+                        ></div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0" style="color:white;">
+            <div class="d-flex flex-center fw-bold fs-6">
+              <a
+                href="https://t.me/AppleTesters"
+                class="text-muted text-hover-primary px-2"
+                target="_blank" style="color:white!important;"
+                >Contact Support</a
+              >
+              <a
+                href="https://apptesters.org/purchase-certificate/"
+                class="text-muted text-hover-primary px-2"
+                target="_blank" style="color:white!important;"
+                >Buy Lifetime Certificate</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--<script
+      src="https://sign.askua.ovh/assets/plugins/global/plugins.bundle.js"
+      type="text/javascript"
+    ></script>-->
+<script
+      src="/assets/plugins.bundle.js"
+      type="text/javascript"
+    ></script>
+    <script type="text/javascript">
+      function progressHandler(event) {
+        var percent = event.loaded / event.total;
+        document.getElementById("progressBar").style.opacity = 1;
+        document.getElementById("border").style.opacity = 1;
+        document.getElementById("progressBar").style.width = percent * 100 + '%'
+        console.log(percent)
+        if(percent === 1){
+          if(document.getElementById("ipa").type === "text"){
+            document.getElementById("progressBar").remove();
+            document.getElementById("border").remove();
+            document.getElementById("waittext").innerHTML = "<span class='fs-6 fw-semibold form-label mt-3'>Please wait while we download your IPA...</span>";
+            document.getElementById("waittext").class = "text-center fs-6 fw-semibold form-label mt-3";
+         }
+        }
+      }
+
+      <% if(token) { %>
+        document.getElementById("p12").disabled = true;
+        document.getElementById("prov").disabled = true;
+      <% } %>
+      
+      document.getElementById("store").addEventListener("click", (function() {
+        if (document.getElementById("store").checked) {
+          Swal.fire({
+            text: "This will store your p12 and mobileprov on server, a password will still be required to sign.",
+            title: "Are you sure?",
+            icon: "info",
+            buttonsStyling: !1,
+            confirmButtonText: "I'm sure!",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            customClass: {
+              confirmButton: "btn btn-danger",
+              cancelButton: "btn btn-primary"
+            },
+          }).then(e => {
+            if (e.isDismissed) {
+              document.getElementById("store").checked = false;
+            }
+          })
+        }
+      }))
+      
+      document.getElementById("urlswap").addEventListener("click", (function() {
+        if(document.getElementById("ipa").type === "file"){
+          document.getElementById("ipa").type = "text";
+          document.getElementById("ipa").placeholder = "https://example.com/app.ipa";
+          document.getElementById("typetext").innerHTML = "Switch to File";
+        }else{
+          document.getElementById("ipa").type = "file";
+          document.getElementById("ipa").placeholder = "";
+          document.getElementById("typetext").innerHTML = "Switch to URL";
+        }
+      }))
+
+      document.getElementById("uploadipa").addEventListener("click", (function() {
+              (async () => {
+                    var formData = new FormData();
+                    formData.append("ipa", document.getElementById("ipa").type === "file" ? document.getElementById("ipa").files[0] : document.getElementById("ipa").value);
+                    <% if(token) { %>
+                    formData.append("p12", "stored");
+                    formData.append("prov", 'stored');
+                    <% }else{ %>
+                    formData.append("p12", document.getElementById("p12").files[0]);
+                    formData.append("prov", document.getElementById("prov").files[0]);
+                    <% } %>
+                    formData.append("password", document.getElementById("password").value);
+                    formData.append("bname", document.getElementById("bname").value);
+                    formData.append("bid", document.getElementById("bid").value);
+                    formData.append("store", document.getElementById("store").checked);
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/upload", true);
+                    xhr.upload.addEventListener("progress", progressHandler, false);
+                    document.getElementById("uploadipa").remove();
+                    xhr.onload = async function() {
+                          if (this.status === 200) {
+                            var data = JSON.parse(this.responseText);
+                            if (data.status === "ok") {
+                              var uuid = data.uuid;
+                              const {
+                                value: nya
+                              } = await Swal.fire({
+                                text: "Files uploaded, please press the button below to sign your IPA!",
+                                icon: "success",
+                                type: "success",
+                                buttonsStyling: !1,
+                                confirmButtonText: "Sign IPA",
+                                customClass: {
+                                  confirmButton: "btn btn-primary",
+                                },
+                              });
+                              if (nya) {
+                                var xhr = new XMLHttpRequest();
+                                xhr.onreadystatechange = function() {
+                                    if (xhr.readyState == 4 && xhr.status == 200) {
+                                      let data = JSON.parse(xhr.responseText);
+                                      if (data.status === 'ok') {
+                                        Swal.fire({
+                                            text: "IPA Signed!",
+                                            icon: "success",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: `Install IPA`,
+                                            showCancelButton: true,
+                                            cancelButtonText: `Copy URL`,
+                                            customClass: {
+                                              confirmButton: "btn btn-primary",
+                                              cancelButton: "btn btn-danger"
+                                            },
+                                          }).then(
+                                            function(e) {
+                                              if (e.isConfirmed) {
+                                                <% if(!mobile) { %>
+                                                navigator.clipboard.writeText(data.pcurl)
+                                                Swal.fire({
+                                                  title: "IPA Install URL",
+                                                  text: data.pcurl,
+                                                  icon: "success",
+                                                  buttonsStyling: !1,
+                                                  confirmButtonText: "Copy!",
+                                                  customClass: {
+                                                    confirmButton: "btn btn-primary",
+                                                  },
+                                                })
+                                                <% }else{ %>
+                                                window.location.href = data.url;
+                                                <%}%>
+                                                }else if (e.isDismissed) {
+                                                  navigator.clipboard.writeText(data.pcurl)
+                                                }
+                                              }
+                                          )
+                                      } else {
+                                          Swal.fire({
+                                            text: data.message,
+                                            icon: "error",
+                                            buttonsStyling: !1,
+                                            confirmButtonText: "Ok, got it!",
+                                            customClass: {
+                                              confirmButton: "btn btn-primary",
+                                            },
+                                          });
+                                      }
+                                  }
+                              }
+                              xhr.open("GET", `/sign?uuid=${uuid}&store=${document.getElementById("store").checked}`, true);
+                              xhr.send();
+                          }
+                      } else {
+                          Swal.fire({
+                            text: data.message,
+                            icon: "error",
+                            buttonsStyling: !1,
+                            confirmButtonText: "Ok, got it!",
+                            customClass: {
+                              confirmButton: "btn btn-primary",
+                            },
+                          });
+                      }
+                  }
+              };
+              xhr.send(formData);
+          })();
+          }))
+    </script>
+  </body>
+</html>
