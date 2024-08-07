@@ -58,7 +58,7 @@ async function makePlist(bid, uuid, nya, domain)
                             <key>needs-shine</key>
                             <false/>
                             <key>url</key>
-                            <string>https://sign.apptesters.org/assets/apptesters-iconx1024.png</string>
+                            <string>https://cdn.discordapp.com/attachments/1130557037361770526/1205309158073700393/apptesters-iconx1024.png</string>
                         </dict>
                         <dict>
                             <key>kind</key>
@@ -66,7 +66,7 @@ async function makePlist(bid, uuid, nya, domain)
                             <key>needs-shine</key>
                             <false/>
                             <key>url</key>
-                            <string>https://sign.apptesters.org/assets/apptesters-iconx1024.png</string>
+                            <string>htthttps://cdn.discordapp.com/attachments/1130557037361770526/1205309158073700393/apptesters-iconx1024.png</string>
                         </dict>
                     </array>
                     <key>metadata</key>

@@ -3,35 +3,37 @@ version: "3.8"
 services:
   askuasign:
     container_name: askuasign
+    restart: always
     build:
       context: .
       args:
-        DOMAIN: https://askuasign.example.com  # remember to actually fill this out lol !!
-    restart: unless-stopped
+        DOMAIN: https://sign.apptesters.org  # remember to actually fill this out lol !!
+    #ports:
+      #- 127.0.0.1:13001:3000
+    networks:
+      apptesters:
+        ipv4_address: 10.89.0.4
     volumes:
       - ./files:/root/AskuaSign/files
-      - ./views:/root/AskuaSign/views
       - ./assets:/root/AskuaSign/assets
-      #- ./.env:/root/AskuaSign/.env
+      - ./custom/index.ejs:/root/AskuaSign/views/index.ejs
+      - ./custom/notice.ejs:/root/AskuaSign/views/notice.ejs
       - ./main.js:/root/AskuaSign/main.js
       - ./utils.js:/root/AskuaSign/utils.js
-    ports:
-      - 3000:3000/tcp
-    networks:
-      - askuasign
     depends_on:
       - mongo
 
   mongo:
     container_name: askuasign-db
-    hostname: mongo
     image: mongo:7.0.2-jammy
-    restart: unless-stopped
+    restart: always
+    networks:
+      apptesters:
+        ipv4_address: 10.89.0.5
     volumes:
       - ./db:/data/db
-    networks:
-      - askuasign
 
 networks:
-  askuasign:
-    external: false
+  apptesters:
+    external: true
+
