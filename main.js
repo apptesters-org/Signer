@@ -14,6 +14,10 @@ const crypto = require('crypto');
 const { makeKey, execAwait, makePlist, deleteFiles } = require('./utils');
 require('dotenv').config();
 
+["signed", "plists", "certs", "temp"].forEach(elem => {
+    fs.mkdirSync(__dirname + `/files/${elem}`, { recursive: true });
+});
+
 const app = express();
 
 app.use(CookieP());
